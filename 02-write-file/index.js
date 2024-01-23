@@ -36,8 +36,9 @@ const askText = () => {
   rl.question('Add some text to the file, please: ', (text) => {
     if (text.toLowerCase() === 'exit') {
       console.log('Data recieved..! Have a nice day!');
-      // Close rl interface and end writableStream
+      // Close rl interface and end/close the stream
       rl.close();
+      writableStream.end(); // optional
     } else {
       // Add the text to the file, +breakline
       writableStream.write(text + '\n', (err) => {
@@ -52,5 +53,10 @@ const askText = () => {
     }
   });
 };
+rl.on('SIGINT', () => {
+  rl.close();
+  // writableStream.end();
+  console.log('\nData recieved..! Have a nice day!');
+});
 
 askText();
