@@ -1,7 +1,10 @@
 /* eslint-disable prettier/prettier */
 const fs = require('node:fs');
+const path = require('node:path');
 
-const stream = fs.createReadStream('./01-read-file/text.txt', 'utf8');
+const filePath = path.join('./01-read-file', 'text.txt');
+
+const stream = fs.createReadStream(filePath, 'utf8');
 
 stream.on('data', (chunk) => {
   console.log(chunk);
