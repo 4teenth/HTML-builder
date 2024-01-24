@@ -1,19 +1,24 @@
 /* eslint-disable prettier/prettier */
+const fs = require('fs');
+const path = require('path');
 
-// const fs = require('fs');
+const folderPath = path.dirname('03-files-in-folder/secret-folder/index.js');
+// const folderPath = './03-files-in-folder/secret-folder';
 
-// const targetPath = './03-files-in-folder/secret-folder';
+// Read the files
+fs.readdir(folderPath, (err, files) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
 
-// fs.readdir(targetPath, function (err, files) {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   files.forEach(function (file) {
-//     console.log(file);
-//   });
-// });
-
-//* Приветствую тебя, мой проверяющий!
-//* Были определённые трудности, не успел со всем разобраться...
-//* Если не трудно и имеется такая возможность, прошу проверить невыполненные работы ближе к концу кросс-чека. Спасибо!
+  files.forEach((file) => {
+    // Get the file name from obj
+    //   const fileName = path.basename(file, '.csv');
+    const fileName = path.parse(file).name;
+    // Get the file extension from obj
+    //   const fileExtension = path.extname(file);
+    const fileExtension = path.parse(file).ext;
+    console.log(`${fileName} - ${fileExtension} - File Size`);
+  });
+});
