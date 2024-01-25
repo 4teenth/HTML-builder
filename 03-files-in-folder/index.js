@@ -2,8 +2,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const folderPath = path.dirname('03-files-in-folder/secret-folder/index.js');
+const folderPath = path.join(__dirname, 'secret-folder');
+// console.log(res);
+// console.log(__dirname);
+//* Alt
+// const folderPath = path.dirname('03-files-in-folder/secret-folder/index.js'); // path.dirname() ignores the trailing directory.
 // const folderPath = './03-files-in-folder/secret-folder';
+
+// const filePath = path.join(__dirname, 'secret-folder/data.csv');
+// const fileInfo = fs.statSync(filePath);
+// console.log(fileInfo);
 
 // Read the files
 fs.readdir(folderPath, (err, files) => {
@@ -11,7 +19,8 @@ fs.readdir(folderPath, (err, files) => {
     console.error(err);
     return;
   }
-
+  //   const targetFiles = fs.readdirSync(folderPath);
+  //   console.log(targetFiles); // array of files in the path above(works only with Sync)
   files.forEach((file) => {
     // Get the file name from obj
     //   const fileName = path.basename(file, '.csv');
@@ -19,6 +28,14 @@ fs.readdir(folderPath, (err, files) => {
     // Get the file extension from obj
     //   const fileExtension = path.extname(file);
     const fileExtension = path.parse(file).ext;
-    console.log(`${fileName} - ${fileExtension} - File Size`);
+    // Get the file size
+    fs.stat(path.join(folderPath, file), (err, stats) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const fileSize = stats.size; // Size in bytes
+      console.log(`${fileName} - ${fileExtension} - ${fileSize / 1000} Kb`);
+    });
   });
 });
