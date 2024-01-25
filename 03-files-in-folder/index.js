@@ -9,18 +9,12 @@ const folderPath = path.join(__dirname, 'secret-folder');
 // const folderPath = path.dirname('03-files-in-folder/secret-folder/index.js'); // path.dirname() ignores the trailing directory.
 // const folderPath = './03-files-in-folder/secret-folder';
 
-// const filePath = path.join(__dirname, 'secret-folder/data.csv');
-// const fileInfo = fs.statSync(filePath);
-// console.log(fileInfo);
-
 // Read the files
 fs.readdir(folderPath, (err, files) => {
   if (err) {
     console.error(err);
     return;
   }
-  //   const targetFiles = fs.readdirSync(folderPath);
-  //   console.log(targetFiles); // array of files in the path above(works only with Sync)
   files.forEach((file) => {
     // Get the file name from obj
     //   const fileName = path.basename(file, '.csv');
