@@ -34,8 +34,14 @@ fs.readdir(folderPath, (err, files) => {
         console.error(err);
         return;
       }
-      const fileSize = stats.size; // Size in bytes
-      console.log(`${fileName} - ${fileExtension} - ${fileSize / 1000} Kb`);
+      if (stats.isFile()) {
+        const fileSize = stats.size; // Size in bytes
+        console.log(
+          `${fileName} - ${fileExtension.slice(1, fileExtension.length)} - ${
+            fileSize / 1000
+          } Kb`,
+        );
+      }
     });
   });
 });
