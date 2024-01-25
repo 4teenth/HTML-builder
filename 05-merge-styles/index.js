@@ -23,6 +23,10 @@ fs.mkdir(toDir, { recursive: true }, (err) => {
             }
             if (stats.isFile() && path.extname(file) === '.css') {
               console.log(file);
+              fs.readFile(path.join(fromDir, file), 'utf-8', (err, data) => {
+                if (err) throw err; // Alt: if (err) {cl/ce(err); \n return}
+                console.log(data);
+              });
             }
           });
         });
