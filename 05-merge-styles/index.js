@@ -3,7 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 const fromDir = './05-merge-styles/styles/';
-const toDir = './05-merge-styles/styles/';
+const toDir = './05-merge-styles/project-dist/';
+
+let totalStylesData = [];
 
 fs.mkdir(toDir, { recursive: true }, (err) => {
   if (err) {
@@ -22,15 +24,30 @@ fs.mkdir(toDir, { recursive: true }, (err) => {
               return;
             }
             if (stats.isFile() && path.extname(file) === '.css') {
-              console.log(file);
+              //   console.log(file); // check all needed files are .css files
               fs.readFile(path.join(fromDir, file), 'utf-8', (err, data) => {
                 if (err) throw err; // Alt: if (err) {cl/ce(err); \n return}
-                console.log(data);
+                totalStylesData.push(data);
+                // console.log(totalStylesData); // ARRAYS of STYLES
+                // (totalStylesData.length === files.length) // false, cuz 3 Arrays from .css files, but 4 files in current folder (includes style.txt)
+                fs.writeFile(
+                  'bundle.css',
+                  totalStylesData.join('\n'),
+                  'utf-8',
+                  (err) => {
+                    if (err) throw err;
+                    // console.log('The bundle.css file has been saved.');
+                  },
+                );
               });
             }
           });
         });
       }
     });
+    console.log('The bundle.css file has been saved.');
   }
+});
+fs.copyFile('bundle.css', toDir + 'bundle.css', (err) => {
+  err ? console.log(err) : console.log(' - file was created');
 });
