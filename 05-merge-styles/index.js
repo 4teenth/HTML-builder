@@ -31,7 +31,7 @@ fs.mkdir(toDir, { recursive: true }, (err) => {
                 // console.log(totalStylesData); // ARRAYS of STYLES
                 // (totalStylesData.length === files.length) // false, cuz 3 Arrays from .css files, but 4 files in current folder (includes style.txt)
                 fs.writeFile(
-                  'bundle.css',
+                  path.join(__dirname, 'project-dist', 'bundle.css'), // 'bundle.css', - this way of path's file before writes our file directly to the root directory, now to the target folder. And now we don't need to use external copy-method on string 51-53
                   totalStylesData.join('\n'),
                   'utf-8',
                   (err) => {
@@ -48,6 +48,6 @@ fs.mkdir(toDir, { recursive: true }, (err) => {
     console.log('The bundle.css file has been saved.');
   }
 });
-fs.copyFile('bundle.css', toDir + 'bundle.css', (err) => {
-  err ? console.log(err) : console.log(' - file was created');
-});
+// fs.copyFile('bundle.css', toDir + 'bundle.css', (err) => {
+//   err ? console.log(err) : console.log(' - file was created');
+// });
